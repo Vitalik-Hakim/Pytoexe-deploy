@@ -1,4 +1,4 @@
 gunicorn==20.1.0
 flask == 0.12.2
-werkzeug.utils==0.16.0
-hashids == 1.0.4
+werkzeug.utils
+hashids 
