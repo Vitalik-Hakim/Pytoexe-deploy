@@ -1,4 +1,3 @@
 gunicorn==20.1.0
 flask == 0.12.2
-werkzeug.utils
 hashids 
