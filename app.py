@@ -123,4 +123,4 @@ def about():
 if __name__ == '__main__':
     app.secret_key = 'xxxxxxxx'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run() # running the flask app
+    app.run(host="0.0.0.0") # running the flask app
