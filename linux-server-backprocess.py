@@ -1,6 +1,7 @@
 
 
 
+from genericpath import isfile
 import os
 
 import subprocess
@@ -34,6 +35,9 @@ while True:
             if file[-3:] != '.py':
                 os.remove('{}/{}'.format(UPLOAD_FOLDER,file))
                 continue
+            if os.path.isfile(file) == False:
+                continue
+                
             createDirectory = "pyinstaller --onefile {}/{}".format(UPLOAD_FOLDER,file)
 
             subprocess.call(createDirectory, shell=True)
