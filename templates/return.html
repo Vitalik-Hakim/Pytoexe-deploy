@@ -1,2 +1,27 @@
-{% extends 'layout.html' %}{% block body %} Return in <b>{{ time }}</b> seconds
-to receive your exe with <b>{{ filenamed }}</b> ticket {% endblock %}
+{% extends 'layout.html' %}{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Ticket</title>
+    <link rel="stylesheet" href="./static/ticket.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<div class="container">
+   <div class="label">We have converted over <b> {{ hits }}</b> files!</div> 
+  <div class="label">Wait for <b>{{ time }}</b> seconds
+    to receive your exe with this ticket:
+  <div class="copy-text">
+    <input type="text" class="text" value={{ filenamed }} />
+    <button><i class="fa fa-clone"></i></button>
+  </div>
+</div>
+<script src="./static/ticket.js"></script>
+</body>
+</html>
+{% endblock %}
