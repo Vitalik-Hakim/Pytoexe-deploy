@@ -52,6 +52,7 @@ def uploadpage():
 
 @app.route('/upload', methods = ['GET', 'POST'])
 def uploadfile():
+   addr = request.environ['REMOTE_ADDR']
    if request.method == 'POST': # check if the method is post
       files = request.files.getlist('files') # get the file from the files object
       print(files)
@@ -61,22 +62,30 @@ def uploadfile():
       #rands = hashids.encode(randInt)
       suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
       filenamed = "_".join([basename,randInt,suffix]) # e.g. 'my_exe_ticket_XDJSs3N_120508_171442'
+      indexed = 0
       for f in files:
          print(f.filename)
          print(filenamed)
          # Saving the file in the required destination
          if check_file_extension(f.filename):
+            indexed = indexed + 1
             f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(filenamed+".py"))) # this will secure the file
             res = os.listdir('uploads')
             print(res)
             position = res.index(filenamed+'.py')
+            # Counting hits
+            with open('indexed.txt', 'a') as f:
+                f.write(str(filenamed) + " IP:"+ addr + '\n')
+            with open('indexed.txt', 'r') as f:
+                hit_list = f.readlines()
+            hits = len(hit_list)
             # each File takes about one minute to process so
             time = 60*position+1 # for 0 indexing of lists/ possible for first person
             if time == 1:
                 time = 60
       if time == 0:
             filenamed = "Invalid Ticket Name: (Upload A the required file)"
-      return render_template('return.html',app_data=app_data,filenamed=filenamed,time=time)
+      return render_template('return.html',app_data=app_data,filenamed=filenamed,time=time, hits=hits)
 
 
 # Download
