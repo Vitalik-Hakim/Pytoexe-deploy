@@ -4,14 +4,14 @@ from flask import Flask, render_template, request, send_file, flash
 from scipy import rand
 from werkzeug.utils import secure_filename
 import datetime
-import hashids
+#import hashids
 import random
 
 
 
 
 ## Implementing Ticket naming system
-hashids = hashids.Hashids(salt="this is my exe and salt", )
+#hashids = hashids.Hashids(salt="this is my exe and salt", )
 
 
 # initialising the flask app
@@ -57,10 +57,10 @@ def uploadfile():
       print(files)
       time = 0
       basename = "my_exe_ticket"
-      randInt = random.randint(0,5000)
-      rands = hashids.encode(randInt)
+      randInt = str(random.randint(0,5000))
+      #rands = hashids.encode(randInt)
       suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
-      filenamed = "_".join([basename,rands,suffix]) # e.g. 'my_exe_ticket_XDJSs3N_120508_171442'
+      filenamed = "_".join([basename,randInt,suffix]) # e.g. 'my_exe_ticket_XDJSs3N_120508_171442'
       for f in files:
          print(f.filename)
          print(filenamed)
@@ -101,11 +101,11 @@ def ticket():
        print(res)
        if ticket_id+".exe" in res:
 
-            return send_file('downloads//{}.exe'.format(ticket_id), as_attachment=True)
+            return send_file('downloads/{}.exe'.format(ticket_id), as_attachment=True)
             
             
        else:
-        flash('Ticket not found')
+        pass
     return render_template('ticket.html',app_data=app_data)
 @app.route('/service')
 def service():
@@ -123,4 +123,4 @@ def about():
 if __name__ == '__main__':
     app.secret_key = 'xxxxxxxx'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host="0.0.0.0") # running the flask app
+    app.run() # running the flask app
