@@ -12,7 +12,6 @@ serviceaccountkey.json
 FB-ACCESS-TOKEN.txt
 uploadfiles.py
 uploads/
-uploads-server-1/
 uploads-server-2/
 # Distribution / packaging
 .Python
@@ -20,6 +19,7 @@ build/
 develop-eggs/
 dist/
 downloads/
+uploads-server-1/
 eggs/
 .eggs/
 lib/
