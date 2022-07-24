@@ -1,0 +1,36 @@
+{% block body %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Basic CSS-Only Modal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/modal.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+  <div class="interior">
+    <a class="btn" href="#open-modal">📥Download Executable(.exe)</a>
+  </div>
+</div>
+<div id="open-modal" class="modal-window">
+  <div>
+    <a href="#" title="Close" class="modal-close">Close</a>
+   <div class="label">We have converted over <b> {{ hits }}</b> files!</div> 
+  <div class="label">Wait for <b>{{ time }}</b> seconds
+    to download your exe with this ticket:
+  <div class="copy-text">
+    <input type="text" class="text" value={{ filenamed }} />
+    <button><i class="fa fa-clone"> Copy Ticket</i></button> <br>
+  </div>
+  <a href="http://127.0.0.1:5000/ticket" class="button3" target="_blank" rel="noopener">Download {{ clickbait }}</a>
+</div>
+</div>
+<!-- partial -->
+<script src="../static/ticket.js"></script>
+</body>
+</html>
+{% endblock %}

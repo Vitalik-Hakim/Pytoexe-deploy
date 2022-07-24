@@ -64,17 +64,4 @@
 .copy-text.active button:after {
   display: block;
 }
-footer {
-  position: fixed;
-  height: 50px;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  background-color: #5784f5;
-  color: white;
-  text-align: center;
-}
-footer p {
-  margin: revert;
-  padding: revert;
-}
+

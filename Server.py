@@ -65,6 +65,8 @@ def uploadfile():
       indexed = 0
       for f in files:
          print(f.filename)
+         clickbait = f.filename
+         clickbait = clickbait.replace(".py",".exe")
          print(filenamed)
          # Saving the file in the required destination
          if check_file_extension(f.filename):
@@ -85,7 +87,7 @@ def uploadfile():
                 time = 60
       if time == 0:
             filenamed = "Invalid Ticket Name: (Upload A the required file)"
-      return render_template('return.html',app_data=app_data,filenamed=filenamed,time=time, hits=hits)
+      return render_template('modal.html',app_data=app_data,filenamed=filenamed,time=time, hits=hits, clickbait=clickbait)
 
 
 # Download
@@ -128,6 +130,10 @@ def contact():
 @app.route('/about')
 def about():
     return render_template('about.html', app_data=app_data)
+
+@app.route('/modal')
+def modal():
+    return render_template('modal.html', app_data=app_data)
 
 if __name__ == '__main__':
     app.secret_key = 'xxxxxxxx'
