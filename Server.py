@@ -1,6 +1,6 @@
 # importing the required libraries
 import os
-from flask import Flask, render_template, request, send_file, flash
+from flask import Flask, render_template, request, send_file, flash,redirect
 from scipy import rand
 from werkzeug.utils import secure_filename
 import datetime
@@ -34,13 +34,14 @@ if not os.path.exists(upload_folder):
 
 # Configuring the upload folder
 app.config['UPLOAD_FOLDER'] = upload_folder
-
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 # configuring the allowed extensions
 allowed_extensions = ['py',]
 
 def check_file_extension(filename):
     return filename.split('.')[-1] in allowed_extensions
-
+def check_limit(filename):
+    pass
 # The path for uploading the file
 @app.route('/')
 def index():
@@ -53,6 +54,12 @@ def uploadpage():
 @app.route('/upload', methods = ['GET', 'POST'])
 def uploadfile():
    addr = request.environ['REMOTE_ADDR']
+        # Counting hits
+   with open('indexed.txt', 'a') as f:
+        f.write("Different file uploaded" + " IP:"+ addr + '\n')
+   with open('indexed.txt', 'r') as f:
+        hit_list = f.readlines()
+   hits = len(hit_list)
    if request.method == 'POST': # check if the method is post
       files = request.files.getlist('files') # get the file from the files object
       print(files)
@@ -64,7 +71,11 @@ def uploadfile():
       filenamed = "_".join([basename,randInt,suffix]) # e.g. 'my_exe_ticket_XDJSs3N_120508_171442'
       indexed = 0
       for f in files:
-         print(f.filename)
+        #  f.filename.replace(" ","")
+        #  if f== '':
+        #     print("Please Upload A file")
+        #     redirect('/')
+        #  print(f.filename)
          clickbait = f.filename
          clickbait = clickbait.replace(".py",".exe")
          print(filenamed)
@@ -75,9 +86,9 @@ def uploadfile():
             res = os.listdir('uploads')
             print(res)
             position = res.index(filenamed+'.py')
-            # Counting hits
+                    # Counting hits
             with open('indexed.txt', 'a') as f:
-                f.write(str(filenamed) + " IP:"+ addr + '\n')
+                f.write((filenamed) + " IP:"+ addr + '\n')
             with open('indexed.txt', 'r') as f:
                 hit_list = f.readlines()
             hits = len(hit_list)
@@ -85,9 +96,12 @@ def uploadfile():
             time = 60*position+1 # for 0 indexing of lists/ possible for first person
             if time == 1:
                 time = 60
+
       if time == 0:
             filenamed = "Invalid Ticket Name: (Upload A the required file)"
       return render_template('modal.html',app_data=app_data,filenamed=filenamed,time=time, hits=hits, clickbait=clickbait)
+   else:
+        return render_template('404.html'), 404
 
 
 # Download
@@ -134,6 +148,16 @@ def about():
 @app.route('/modal')
 def modal():
     return render_template('modal.html', app_data=app_data)
+
+
+# ERROR ROUTES
+@app.errorhandler(404)
+def not_found(e):
+  return render_template('404.html'), 404
+
+@app.errorhandler(413)
+def too_large(e):
+    return "File is too large", 413
 
 if __name__ == '__main__':
     app.secret_key = 'xxxxxxxx'
