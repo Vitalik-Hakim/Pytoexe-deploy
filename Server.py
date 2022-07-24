@@ -28,12 +28,17 @@ app_data = {
 
 
 # Creating the upload folder
-upload_folder = "uploads"
-if not os.path.exists(upload_folder):
-   os.mkdir(upload_folder)
+upload_folder1 = "uploads-server-1"
+if not os.path.exists(upload_folder1):
+   os.mkdir(upload_folder1)
+
+upload_folder2 = "uploads-server-2"
+if not os.path.exists(upload_folder2):
+   os.mkdir(upload_folder2)
 
 # Configuring the upload folder
-app.config['UPLOAD_FOLDER'] = upload_folder
+app.config['UPLOAD_FOLDER1'] = upload_folder1
+app.config['UPLOAD_FOLDER2'] = upload_folder2
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 # configuring the allowed extensions
 allowed_extensions = ['py',]
@@ -50,15 +55,13 @@ def index():
 @app.route('/upload-page')
 def uploadpage():
    return render_template('upload.html')
-
+indexed = 1
 @app.route('/upload', methods = ['GET', 'POST'])
 def uploadfile():
    addr = request.environ['REMOTE_ADDR']
         # Counting hits
-   with open('indexed.txt', 'a') as f:
-        f.write("Different file uploaded" + " IP:"+ addr + '\n')
-   with open('indexed.txt', 'r') as f:
-        hit_list = f.readlines()
+   with open('indexed.txt', 'r') as s:
+        hit_list = s.readlines()
    hits = len(hit_list)
    if request.method == 'POST': # check if the method is post
       files = request.files.getlist('files') # get the file from the files object
@@ -69,33 +72,51 @@ def uploadfile():
       #rands = hashids.encode(randInt)
       suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
       filenamed = "_".join([basename,randInt,suffix]) # e.g. 'my_exe_ticket_XDJSs3N_120508_171442'
-      indexed = 0
+      
       for f in files:
         #  f.filename.replace(" ","")
         #  if f== '':
         #     print("Please Upload A file")
         #     redirect('/')
+
+         
         #  print(f.filename)
          clickbait = f.filename
          clickbait = clickbait.replace(".py",".exe")
          print(filenamed)
          # Saving the file in the required destination
          if check_file_extension(f.filename):
-            indexed = indexed + 1
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(filenamed+".py"))) # this will secure the file
-            res = os.listdir('uploads')
-            print(res)
-            position = res.index(filenamed+'.py')
-                    # Counting hits
-            with open('indexed.txt', 'a') as f:
-                f.write((filenamed) + " IP:"+ addr + '\n')
-            with open('indexed.txt', 'r') as f:
-                hit_list = f.readlines()
-            hits = len(hit_list)
-            # each File takes about one minute to process so
-            time = 60*position+1 # for 0 indexing of lists/ possible for first person
-            if time == 1:
-                time = 60
+            if hits % 2 == 0: 
+                f.save(os.path.join(app.config['UPLOAD_FOLDER1'] ,secure_filename(filenamed+".py"))) # this will secure the file
+                res = os.listdir('uploads-server-1')
+                print(res)
+                position = res.index(filenamed+'.py')
+                        # Counting hits
+                with open('indexed.txt', 'a') as f:
+                    f.write((filenamed) + " IP:"+ addr + '\n')
+                with open('indexed.txt', 'r') as f:
+                    hit_list = f.readlines()
+                hits = len(hit_list)
+                # each File takes about one minute to process so
+                time = 60*position+1 # for 0 indexing of lists/ possible for first person
+                if time == 1:
+                    time = 60
+            else:
+                f.save(os.path.join(app.config['UPLOAD_FOLDER2'] ,secure_filename(filenamed+".py"))) # this will secure the file
+                res = os.listdir('uploads-server-2')
+                print(res)
+                position = res.index(filenamed+'.py')
+                        # Counting hits
+                with open('indexed.txt', 'a') as f:
+                    f.write((filenamed) + " IP:"+ addr + '\n')
+                with open('indexed.txt', 'r') as f:
+                    hit_list = f.readlines()
+                hits = len(hit_list)
+                # each File takes about one minute to process so
+                time = 60*position+1 # for 0 indexing of lists/ possible for first person
+                if time == 1:
+                    time = 60
+            
 
       if time == 0:
             filenamed = "Invalid Ticket Name: (Upload A the required file)"
@@ -157,7 +178,11 @@ def not_found(e):
 
 @app.errorhandler(413)
 def too_large(e):
-    return "File is too large", 413
+   return render_template('413.html'), 413
+
+@app.errorhandler(500)
+def too_large(e):
+    return render_template('500.html'), 500
 
 if __name__ == '__main__':
     app.secret_key = 'xxxxxxxx'

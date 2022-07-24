@@ -1,7 +1,24 @@
-{% block body %}
-<body>
-  <link rel="stylesheet" href="../static/css/download.css">
-<h1> 413 File too large </h1>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>- 413 Error</title>
+    <link rel="stylesheet" href="../static/css/500.css" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <div
+      class="error-500"
+      data-text="Oh no! Your file was as big as our food. The limit is 5MB"
+    >
+      <spaguetti>
+        <fork></fork>
+        <meat></meat>
+        <pasta></pasta>
+        <plate></plate>
+      </spaguetti>
+    </div>
+    <!-- partial -->
+    <script src="../static/js/500.js"></script>
+  </body>
 </html>
-{% endblock %}
