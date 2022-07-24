@@ -22,7 +22,7 @@ app_data = {
     "description":  "A web application to convert python .py files to .exe",
     "author":       "Vitalik Hakim",
     "html_title":   "Python to EXE CONVERTER",
-    "project_name": "PYTHON TO EXE WEBAPP",
+    "project_name": "Python To Exe Converter",
     "keywords":     "PYTHON, .PY, exe, convert"
 }
 
