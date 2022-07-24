@@ -21,6 +21,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../static/file.css" />
+    <link rel="icon" href="../static/Python-ico.png" type="image/png">
   </head>
   <body>
     <!-- Navigation -->
@@ -70,7 +71,7 @@
 <h1> Upload Python File</h1> -->
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <input type="file" name="files" id="file" accept=".py" />
-      <p>Drag your python file here or click in this area.</p>
+      <p>Drag your python file here or click in this area. <br> 5MB Limit</p>
       <button type="submit">Upload .PY file</button>
     </form>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
