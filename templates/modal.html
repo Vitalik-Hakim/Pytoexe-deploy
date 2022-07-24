@@ -20,18 +20,46 @@
 <div id="open-modal" class="modal-window">
   <div>
     <a href="#" title="Close" class="modal-close">Close</a>
-   <div class="label">We have converted over <b> {{ hits }}</b> files!</div> 
-  <div class="label">Wait for <b>{{ time }}</b> seconds
+   <div class="label">We have converted over <b> {{ hits }}</b> files!</div>
+   <div id="conversion-process" style="display:block;">
+   <div class="label">Converting file.. Please wait..</div>
+   </div>
+     <div id="conversion" style="display:none;">
+      <div class="label">Conversion Complete!</div>
+    </div>
+   <progress  value="0" max="{{ time }}" id="progressBar"></progress> 
+  <div class="label">Copy Ticket and Wait for <b>{{ time }}</b> seconds
     to download your exe with this ticket:
   <div class="copy-text">
     <input type="text" class="text" value={{ filenamed }} />
     <button><i class="fa fa-clone"> Copy Ticket</i></button> <br>
   </div>
-  <a href="/ticket" class="button3" target="_blank" rel="noopener">Download {{ clickbait }}</a>
+  <div id="clickbait" style="display:none;">
+      <a href="/ticket" class="button3" target="_blank" rel="noopener">Download {{ clickbait }}</a>
+    </div>
+  
 </div>
 </div>
 <!-- partial -->
-<script src="../static/ticket.js"></script>
+
+<script>
+function showDiv() {
+   document.getElementById('clickbait').style.display = "block";
+   document.getElementById('conversion').style.display = "block";
+   document.getElementById('conversion-process').style.display = "none";
+}
+
+var timeleft = {{ time }};
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    showDiv()
+    clearInterval(downloadTimer);
+  }
+  document.getElementById("progressBar").value = {{ time }} - timeleft;
+  timeleft -= 1;
+}, 1000);
+</script>
+<script src="../static/js/ticket.js"></script>
 </body>
 </html>
 {% endblock %}

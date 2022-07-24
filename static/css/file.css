@@ -49,3 +49,6 @@ form button:hover {
 form button:active {
   border: 0;
 }
+b {
+  color: red;
+}
