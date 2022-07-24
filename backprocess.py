@@ -2,7 +2,7 @@
 import os
 import subprocess
 import shutil
-
+from uploadfiles import uploadToCloud
 ## This is a constant script that we need to make either in Python or any langauge
 UPLOAD_FOLDER = 'uploads'
 DOWNLOAD_FOLDER = 'downloads'
@@ -13,10 +13,13 @@ while True:
         res = os.listdir(UPLOAD_FOLDER)
         print(res)
         for file in res:
+            pyfile = '{}/{}'.format(UPLOAD_FOLDER,file)
+            uploadToCloud(pyfile)
             createDirectory = "pyinstaller --onefile {}/{}".format(UPLOAD_FOLDER,file)
             subprocess.call(createDirectory, shell=True)
             exe = file.replace(".py", ".exe")
             full_path = 'dist/{}'.format(exe)
+            uploadToCloud(full_path)
             shutil.move(full_path, DOWNLOAD_FOLDER)
             os.remove('{}/{}'.format(UPLOAD_FOLDER,file))
             shutil.rmtree('build')
