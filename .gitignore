@@ -11,6 +11,9 @@ indexed.txt
 serviceaccountkey.json
 FB-ACCESS-TOKEN.txt
 uploadfiles.py
+uploads/
+uploads-server-1/
+uploads-server-2/
 # Distribution / packaging
 .Python
 build/
