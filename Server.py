@@ -181,7 +181,7 @@ def too_large(e):
    return render_template('413.html'), 413
 
 @app.errorhandler(500)
-def too_large(e):
+def server_error(e):
     return render_template('500.html'), 500
 
 if __name__ == '__main__':
