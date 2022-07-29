@@ -143,6 +143,9 @@ def ticket():
     if request.method == "POST":
        # getting input with ticket in HTML form
        ticket_id = request.form.get("download-ticket")
+       ticket_Split = ticket_id.split("_")
+       if ticket_Split[1] != "exe":
+            return render_template('ticket.html',app_data=app_data)
        res = os.listdir('downloads')
        print(res)
        if ticket_id+".exe" in res:
