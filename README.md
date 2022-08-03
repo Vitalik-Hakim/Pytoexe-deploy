@@ -14,7 +14,7 @@
  Environment: Windows and other Linux based Distros. <br>
  Use wine for windows exe in Linux.<b>(Coming soon)</b> <br>
  <br>
- <br>
+
 <img src="https://user-images.githubusercontent.com/73163003/180650495-5eaa3ee4-d864-4282-b95f-a535c48e5b60.png" width="500" height="300">
 <img src="https://user-images.githubusercontent.com/73163003/180650451-09b2e127-3c63-4ebc-9da2-6d61d69ddbda.png" style="border-radius: 50%;" width="500" height="300">
 <img src="https://user-images.githubusercontent.com/73163003/180650895-74d2fb0d-b262-4ed2-91ff-296c306c09ed.png" width="500" height="300">
